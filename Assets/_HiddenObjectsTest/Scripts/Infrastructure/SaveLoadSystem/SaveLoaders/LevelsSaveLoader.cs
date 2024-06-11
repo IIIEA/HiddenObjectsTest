@@ -1,15 +1,26 @@
-﻿namespace Infrastructure.SaveLoadSystem.SaveLoaders
+﻿using System.Linq;
+
+namespace Infrastructure.SaveLoadSystem.SaveLoaders
 {
-  public class LevelsSaveLoader : SaveLoader<LevelsSaveData, LevelsSaveDataProvider>
+  public class LevelsSaveLoader : SaveLoader<LevelsSaveData, GameDataManager>
   {
-    protected override LevelsSaveData ConvertToData(LevelsSaveDataProvider service)
+    protected override LevelsSaveData ConvertToData(GameDataManager service)
     {
-      return new LevelsSaveData(levelsProgress: service.Provide());
+      LevelsSaveData levelsSaveData = new LevelsSaveData();
+      
+      foreach (var levelData in service.ProvideLevels())
+      {
+        levelsSaveData.LevelsProgress.Add(levelData.ID, levelData.ProgressCounter);
+      }
+
+      return levelsSaveData;
     }
 
-    protected override void SetupData(LevelsSaveDataProvider service, LevelsSaveData data)
+    protected override void SetupData(GameDataManager service, LevelsSaveData data)
     {
-      service.SetData(data.LevelsProgress);
+      var levelsProgressData = data.LevelsProgress.Select(o => (o.Key, o.Value));
+      
+      service.SetupSavesData(levelsProgressData);
     }
   }
 }

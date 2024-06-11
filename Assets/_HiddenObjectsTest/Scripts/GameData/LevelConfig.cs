@@ -19,6 +19,7 @@ public record LevelData
   public int ID;
   public string Name;
   public int ProgressCounter;
+  public int MaxProgressCounter;
   
   public Sprite Sprite
   {

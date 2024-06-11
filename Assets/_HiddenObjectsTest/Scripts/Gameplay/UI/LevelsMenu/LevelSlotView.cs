@@ -1,9 +1,10 @@
 ﻿using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Gameplay.UI.LevelsMenu
+namespace Gameplay.UI
 {
   public class LevelSlotView : MonoBehaviour
   {
@@ -15,7 +16,13 @@ namespace Gameplay.UI.LevelsMenu
     [SerializeField] private Image _loadingImage;
 
     private Tween _tween;
-    
+
+    public void AddButtonListener(UnityAction action) => 
+      _button.onClick.AddListener(action);
+
+    public void RemoveButtonListener(UnityAction action) => 
+      _button.onClick.RemoveListener(action);
+
     public void SetProgress(float progress) => 
       _progressImage.fillAmount = progress;
 

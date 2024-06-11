@@ -14,9 +14,6 @@ namespace Infrastructure.SaveLoadSystem.Installer
     [ShowInInspector, Service(typeof(GameRepository))]
     private GameRepository _gameRepository = new();
 
-    [Service(typeof(LevelsSaveDataProvider))]
-    private LevelsSaveDataProvider _levelsSaveDataProvider = new();
-
     public override void Inject(ServiceLocator serviceLocator)
     {
       var saveLoaders = GetSaveLoaderList();

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using WebRequestSystem;
 
@@ -25,6 +26,17 @@ public class GameDataManager : ILevelsProvider
     }
   }
 
+  public void SetupSavesData(IEnumerable<(int ID,int Progress)> levelsProgress)
+  {
+    foreach (var data in levelsProgress)
+    {
+      var levelData = _levels.FirstOrDefault(x => x.ID == data.ID);
+
+      if (levelData != null)
+        levelData.ProgressCounter = data.Progress;
+    }
+  }
+
   private void SetupLevelsData(IEnumerable<LevelConfig> levelConfigs)
   {
     foreach (var levelConfig in levelConfigs)
@@ -33,7 +45,8 @@ public class GameDataManager : ILevelsProvider
       {
         ID = levelConfig.ID,
         Name = levelConfig.LevelName,
-        ProgressCounter = levelConfig.ProgressCounter,
+        MaxProgressCounter = levelConfig.ProgressCounter,
+        ProgressCounter = levelConfig.ProgressCounter
       };
 
       UpdateNetworkData(levelData, levelConfig).Forget();
