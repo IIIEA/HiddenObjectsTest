@@ -50,10 +50,10 @@ namespace Infrastructure.SaveLoadSystem
 
     private void OnApplicationPause(bool pauseStatus)
     {
-      // if (pauseStatus)
-      // {
-      //     Save();
-      // }
+      if (pauseStatus)
+      {
+          Save();
+      }
     }
 
     private void OnApplicationQuit()

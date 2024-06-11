@@ -15,10 +15,21 @@ public record LevelConfig
 public record LevelData
 {
   private Sprite _sprite;
+  private int _progress;
   
   public int ID;
   public string Name;
-  public int ProgressCounter;
+
+  public int ProgressCounter
+  {
+    get => _progress;
+    set
+    {
+      _progress = value;
+      OnProgressChanged?.Invoke(_progress);
+    }
+  }
+  
   public int MaxProgressCounter;
   
   public Sprite Sprite
@@ -31,6 +42,7 @@ public record LevelData
     }
   }
 
+  public event Action<int> OnProgressChanged;
   public event Action OnDataUpdated;
 }
 

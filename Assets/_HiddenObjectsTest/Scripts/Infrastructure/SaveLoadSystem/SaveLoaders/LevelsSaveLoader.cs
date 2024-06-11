@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Infrastructure.SaveLoadSystem.SaveLoaders
 {
@@ -6,7 +7,7 @@ namespace Infrastructure.SaveLoadSystem.SaveLoaders
   {
     protected override LevelsSaveData ConvertToData(GameDataManager service)
     {
-      LevelsSaveData levelsSaveData = new LevelsSaveData();
+      LevelsSaveData levelsSaveData = new LevelsSaveData(new Dictionary<int, int>());
       
       foreach (var levelData in service.ProvideLevels())
       {

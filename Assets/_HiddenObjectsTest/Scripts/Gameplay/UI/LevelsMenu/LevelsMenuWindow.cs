@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Infrastructure;
 using Infrastructure.Attributes;
 using Infrastructure.GameManagment;
@@ -33,8 +32,6 @@ namespace Gameplay.UI
 
     private void UpdateInfo()
     {
-      Debug.LogError(_levelsProvider.ProvideLevels().Count());
-      
       foreach (var levelData in _levelsProvider.ProvideLevels())
       {
         var view = _levelsViewPool.GetInstance();

@@ -30,5 +30,14 @@ namespace Infrastructure.SaveLoadSystem.Installer
 
       return saveLoaders;
     }
+
+    private void OnApplicationFocus(bool hasFocus) => 
+      _saveLoadManager.Save();
+
+    private void OnApplicationQuit() => 
+      _saveLoadManager.Save();
+
+    private void OnApplicationPause(bool pauseStatus) => 
+      _saveLoadManager.Save();
   }
 }
