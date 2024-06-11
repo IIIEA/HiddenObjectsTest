@@ -1,6 +1,7 @@
 ﻿using Infrastructure.Attributes;
-using Infrastructure.GameManager;
+using Infrastructure.GameManagment;
 using Infrastructure.Locator;
+using Infrastructure.SaveLoadSystem.SaveLoaders;
 using Sirenix.OdinInspector;
 
 namespace Infrastructure.SaveLoadSystem.Installer
@@ -13,18 +14,21 @@ namespace Infrastructure.SaveLoadSystem.Installer
     [ShowInInspector, Service(typeof(GameRepository))]
     private GameRepository _gameRepository = new();
 
+    [Service(typeof(LevelsSaveDataProvider))]
+    private LevelsSaveDataProvider _levelsSaveDataProvider = new();
+
     public override void Inject(ServiceLocator serviceLocator)
     {
       var saveLoaders = GetSaveLoaderList();
 
-      _saveLoadManager.Construct(saveLoaders, _gameRepository);
+      _saveLoadManager.Construct(saveLoaders, _gameRepository, serviceLocator.GetService<GameContext>());
     }
 
     private ISaveLoader[] GetSaveLoaderList()
     {
       ISaveLoader[] saveLoaders =
       {
-
+        new LevelsSaveLoader()
       };
 
       return saveLoaders;

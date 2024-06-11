@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace GoogleSheetsImporter
 {
   public enum LevelsDataHeaderType
   {
     ID,
+    LevelName,
     ImageURL,
     ImageName,
     ProgressCounter
@@ -14,33 +16,38 @@ namespace GoogleSheetsImporter
   public class LevelsDataParser : IGoogleSheetParser<LevelsDataHeaderType>
   {
     private readonly GameData _gameData;
-    private LevelData _currentlevelData;
+    private LevelConfig _currentlevelConfig;
     
     public LevelsDataParser(GameData gameData)
     {
       _gameData = gameData;
-      _gameData.LevelsData = new List<LevelData>();
+      _gameData.LevelsConfigs = new List<LevelConfig>();
     }
     
     public void Parse(LevelsDataHeaderType header, string token)
     {
+      Debug.LogError(token);
+      
       switch (header)
       {
         case LevelsDataHeaderType.ID:
-          _currentlevelData = new LevelData()
+          _currentlevelConfig = new LevelConfig()
           {
             ID = int.Parse(token)
           };
-          _gameData.LevelsData.Add(_currentlevelData);
+          _gameData.LevelsConfigs.Add(_currentlevelConfig);
+          break;
+        case LevelsDataHeaderType.LevelName:
+          _currentlevelConfig.LevelName = token;
           break;
         case LevelsDataHeaderType.ImageURL:
-          _currentlevelData.ImageURL = token;
+          _currentlevelConfig.ImageURL = token;
           break;
         case LevelsDataHeaderType.ImageName:
-          _currentlevelData.ImageName = token;
+          _currentlevelConfig.ImageName = token;
           break;
         case LevelsDataHeaderType.ProgressCounter:
-          _currentlevelData.ProgressCounter = int.Parse(token);
+          _currentlevelConfig.ProgressCounter = int.Parse(token);
           break;
         default:
           throw new ArgumentOutOfRangeException(nameof(header), header, null);

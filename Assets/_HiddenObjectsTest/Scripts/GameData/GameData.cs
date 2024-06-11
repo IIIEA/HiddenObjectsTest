@@ -4,5 +4,5 @@ using System.Collections.Generic;
 [Serializable]
 public class GameData
 {
-  public List<LevelData> LevelsData;
+  public List<LevelConfig> LevelsConfigs;
 }

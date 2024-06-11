@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Infrastructure.GameManager;
+using Infrastructure.GameManagment;
 using Infrastructure.Locator;
 using UnityEngine;
 

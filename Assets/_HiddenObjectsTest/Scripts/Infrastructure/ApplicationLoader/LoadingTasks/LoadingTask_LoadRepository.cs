@@ -1,31 +1,35 @@
 using System;
 using Cysharp.Threading.Tasks;
 using Infrastructure.Attributes;
+using Infrastructure.GameManagment;
+using Infrastructure.SaveLoadSystem;
+using UnityEngine;
 
 namespace Infrastructure.ApplicationLoader.LoadingTasks
 {
   public sealed class LoadingTaskLoadRepository : ILoadingTask
   {
-    // private SaveLoadManager _saveLoadManager;
-    // private GameManager.GameManager _gameManager;
-    //
+    private SaveLoadManager _saveLoadManager;
+    private GameManager _gameManager;
+    
     public float Weight { get; private set; } = 0.7f;
-    //
-    // [Inject]
-    // private void Construct(SaveLoadManager saveLoadManager, GameManager.GameManager gameManager)
-    // {
-    //     _gameManager = gameManager;
-    //     _saveLoadManager = saveLoadManager;
-    // }
-
-    public async UniTask Do(Action<LoadingResult> callback)
+    
+    [Inject]
+    private void Construct(SaveLoadManager saveLoadManager, GameManager gameManager)
     {
-      await UniTask.WaitForSeconds(0.5f);
+        _gameManager = gameManager;
+        _saveLoadManager = saveLoadManager;
+    }
 
+    public UniTask Do(Action<LoadingResult> callback)
+    {
       // LoadingScreen.ReportProgress(Weight);
-      // _saveLoadManager.Load();
-      // _gameManager.StartGame();
+      
+      _saveLoadManager.Load();
+      _gameManager.StartGame();
       callback?.Invoke(LoadingResult.Success());
+      
+      return UniTask.CompletedTask;
     }
   }
 }

@@ -1,5 +1,5 @@
 ﻿using Infrastructure.Attributes;
-using Infrastructure.GameManager;
+using Infrastructure.GameManagment;
 
 namespace Infrastructure.SaveLoadSystem
 {
@@ -7,24 +7,24 @@ namespace Infrastructure.SaveLoadSystem
   {
     private ISaveLoader[] _saveLoaders;
     private GameRepository _repository;
+    private GameContext _gameContext;
 
     [Inject]
-    public void Construct(ISaveLoader[] saveLoaders, GameRepository repository)
+    public void Construct(ISaveLoader[] saveLoaders, GameRepository repository, GameContext gameContext)
     {
+      _gameContext = gameContext;
       _saveLoaders = saveLoaders;
       _repository = repository;
     }
     
     public void Save()
     {
-      GameContext context = default;
-
       if (_saveLoaders == null)
         return;
 
       foreach (var saveLoader in _saveLoaders)
       {
-        saveLoader.SaveGame(_repository, context);
+        saveLoader.SaveGame(_repository, _gameContext);
       }
 
       _repository.SaveState();
@@ -33,12 +33,10 @@ namespace Infrastructure.SaveLoadSystem
     public void Load()
     {
       _repository.LoadState();
-
-      GameContext context = default;
-
+      
       foreach (var saveLoader in _saveLoaders)
       {
-        saveLoader.LoadGame(_repository, context);
+        saveLoader.LoadGame(_repository, _gameContext);
       }
     }
 

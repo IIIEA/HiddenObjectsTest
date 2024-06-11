@@ -9,12 +9,12 @@ namespace Infrastructure.ApplicationLoader.LoadingTasks
   {
     public float Weight { get; private set; } = 1f;
 
-    public async UniTask Do(Action<LoadingResult> callback)
+    public UniTask Do(Action<LoadingResult> callback)
     {
-      await UniTask.WaitForSeconds(1f);
-
       // LoadingScreen.ReportProgress(Weight);
       callback.Invoke(LoadingResult.Success());
+      
+      return UniTask.CompletedTask;
     }
   }
 }

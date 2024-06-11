@@ -1,4 +1,4 @@
-using Infrastructure.GameManager;
+using Infrastructure.GameManagment;
 
 namespace Infrastructure.SaveLoadSystem
 {

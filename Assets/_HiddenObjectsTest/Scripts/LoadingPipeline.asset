@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: LoadingPipeline
   m_EditorClassIdentifier: 
   _tasks:
+  - script: {fileID: 11500000, guid: 0fd8961f29774ac38532daeab8ef160f, type: 3}
+    className: Infrastructure.ApplicationLoader.LoadingTasks.LoadingTask_GameInit
   - script: {fileID: 11500000, guid: 4b8cdb5f76a74f61943fe8ff7281c9cc, type: 3}
     className: Infrastructure.ApplicationLoader.LoadingTasks.LoadingTask_DownloadingGameData
   - script: {fileID: 11500000, guid: b8e3b06ac90720744b272abc711a4fba, type: 3}

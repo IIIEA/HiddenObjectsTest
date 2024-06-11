@@ -19,7 +19,7 @@ namespace GoogleSheetsImporter
       var levelsDataParser = new LevelsDataParser(gameData);
       await sheetImporter.DownloadAndParseSheet(LEVELS_SHEET_NAME, levelsDataParser);
 
-      var jsonForSaving = JsonConvert.SerializeObject(gameData);
+      var jsonForSaving = JsonUtility.ToJson(gameData);
       await System.IO.File.WriteAllTextAsync(Application.persistentDataPath + "/LevelsData.json", jsonForSaving);
       Debug.Log(jsonForSaving);
     }
