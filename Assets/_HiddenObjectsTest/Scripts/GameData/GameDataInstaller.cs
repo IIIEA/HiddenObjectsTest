@@ -10,9 +10,4 @@ public class GameDataInstaller : GameInstaller
 
     [Service(typeof(AssetLoader))]
     private AssetLoader _assetLoader = new();
-
-    public override void Inject(ServiceLocator serviceLocator)
-    {
-      _gameDataManager.Construct(_assetLoader);
-    }
 }

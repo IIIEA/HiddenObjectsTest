@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using Infrastructure.Attributes;
 using WebRequestSystem;
 
 public class GameDataManager : ILevelsProvider
@@ -8,7 +9,8 @@ public class GameDataManager : ILevelsProvider
   private readonly List<LevelData> _levels = new();
   private AssetLoader _assetLoader;
 
-  public void Construct(AssetLoader assetLoader)
+  [Inject]
+  private void Construct(AssetLoader assetLoader)
   {
     _assetLoader = assetLoader;
   }
