@@ -33,15 +33,15 @@ namespace Infrastructure.ApplicationLoader
       LoadingScreen.Show();
       CreateTasks(_pipeline.GetTaskList());
 
-      foreach (ILoadingTask task in _loadingTasks)
+      foreach (ILoadingTask loadingTask in _loadingTasks)
       {
         var tcs = new TaskCompletionSource<LoadingResult>();
-        task.Do(result => tcs.TrySetResult(result));
+        loadingTask.Do(result => tcs.TrySetResult(result));
 
-        var uniTask = tcs.Task;
-        uniTask.AddTo(_cancellationToken.Token);
+        var task = tcs.Task;
+        task.AddTo(_cancellationToken.Token);
         
-        LoadingResult result = await uniTask;
+        LoadingResult result = await task;
 
         if (!result.IsSuccess)
         {

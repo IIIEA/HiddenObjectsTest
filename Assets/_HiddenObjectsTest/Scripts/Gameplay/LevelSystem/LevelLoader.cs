@@ -2,6 +2,7 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Gameplay.UI.Level;
+using Infrastructure.Attributes;
 using Infrastructure.UI;
 
 namespace Gameplay.LevelSystem
@@ -14,7 +15,8 @@ namespace Gameplay.LevelSystem
 
     private CancellationTokenSource _cancellationTokenSource = new();
 
-    public void Construct(LevelWindow levelWindow, ImageClickHandler imageClickHandler,
+    [Inject]
+    private void Construct(LevelWindow levelWindow, ImageClickHandler imageClickHandler,
       WindowService windowService)
     {
       _levelWindow = levelWindow;
