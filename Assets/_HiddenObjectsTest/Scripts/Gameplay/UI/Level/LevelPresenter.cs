@@ -1,5 +1,4 @@
 ﻿using System;
-using Infrastructure.UI;
 
 namespace Gameplay.UI.Level
 {
@@ -7,21 +6,19 @@ namespace Gameplay.UI.Level
   {
     private LevelWindow _levelWindow;
     private LevelData _levelData;
-    private readonly ImageClickHandler _clickHandler;
-    private readonly WindowService _windowService;
 
-    public LevelPresenter(LevelWindow levelWindow, LevelData levelData,
-      ImageClickHandler clickHandler, WindowService windowService)
+    public LevelPresenter(LevelWindow levelWindow, LevelData levelData)
     {
       _levelWindow = levelWindow;
       _levelData = levelData;
-      _clickHandler = clickHandler;
-      _windowService = windowService;
 
-      SetupLevel();
-      _clickHandler.SetEvent(OnClick);
+      _levelData.OnProgressChanged += OnProgressChanged;
       _levelWindow.OnOpened += SetupLevel;
-      _levelWindow.OnClosed += Dispose;
+    }
+
+    private void OnProgressChanged(int progress)
+    {
+      _levelWindow.SetCounter(progress.ToString());
     }
 
     private void SetupLevel()
@@ -30,27 +27,11 @@ namespace Gameplay.UI.Level
       _levelWindow.SetImage(_levelData.Sprite);
     }
 
-    private void OnClick()
-    {
-      _levelData.ProgressCounter--;
-      _levelWindow.SetCounter(_levelData.ProgressCounter.ToString());
-      CheckEndGame(_levelData.ProgressCounter);
-    }
-
-    private void CheckEndGame(int counter)
-    {
-      if (counter <= 0)
-      {
-        _windowService.Open<LevelsMenuWindow>();
-      }
-    }
-
     public void Dispose()
     {
+      _levelData.OnProgressChanged -= OnProgressChanged;
       _levelWindow.OnOpened -= SetupLevel;
-      _levelWindow.OnClosed -= Dispose;
-      
-      _clickHandler.Dispose();
+
       _levelWindow = null;
       _levelData = null;
     }

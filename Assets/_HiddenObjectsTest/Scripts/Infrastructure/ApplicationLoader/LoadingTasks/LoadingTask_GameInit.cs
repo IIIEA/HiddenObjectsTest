@@ -21,7 +21,7 @@ namespace Infrastructure.ApplicationLoader.LoadingTasks
 
     public UniTask Do(Action<LoadingResult> callback)
     {
-      // LoadingScreen.ReportProgress(Weight);
+      LoadingScreen.ReportProgress(Weight);
       _gameContext.StartInject();
       callback.Invoke(LoadingResult.Success());
 

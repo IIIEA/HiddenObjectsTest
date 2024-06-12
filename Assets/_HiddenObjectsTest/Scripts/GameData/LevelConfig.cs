@@ -19,6 +19,7 @@ public record LevelData
   
   public int ID;
   public string Name;
+  public int MaxProgressCounter;
 
   public int ProgressCounter
   {
@@ -30,7 +31,6 @@ public record LevelData
     }
   }
   
-  public int MaxProgressCounter;
   
   public Sprite Sprite
   {
@@ -38,12 +38,12 @@ public record LevelData
     set
     {
       _sprite = value;
-      OnDataUpdated?.Invoke();
+      OnImageUpdated?.Invoke();
     }
   }
 
   public event Action<int> OnProgressChanged;
-  public event Action OnDataUpdated;
+  public event Action OnImageUpdated;
 }
 
 [Serializable]

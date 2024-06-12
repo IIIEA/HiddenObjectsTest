@@ -7,18 +7,17 @@ namespace Infrastructure.ApplicationLoader
 {
   public sealed class LoadingScreen : MonoBehaviour
   {
-    [SerializeField] private Sprite _horizontal;
-    [SerializeField] private Sprite _vertical;
-    [SerializeField] private Image _image;
+    // [SerializeField] private Sprite _horizontal;
+    // [SerializeField] private Sprite _vertical;
+    // [SerializeField] private Image _image;
 
     public static LoadingScreen Instance;
 
     [SerializeField] private TMP_Text _errorText;
-
     [SerializeField] private LoadingProgressBar _progressBar;
-
     [SerializeField] private ApplicationLoader _applicationLoader;
-    private float _progress;
+    
+    // private float _progress;
 
     public static event Action OnHide;
 
@@ -39,29 +38,29 @@ namespace Infrastructure.ApplicationLoader
       _applicationLoader.OnProgressChanged -= OnProgressChanged;
     }
 
-    private void Update()
-    {
-      if (_progress == 1)
-        return;
-
-      float aspectRatio = (float)Screen.width / Screen.height;
-
-      if (aspectRatio > 1.0f)
-      {
-        if (_image.sprite != _horizontal)
-          _image.sprite = _horizontal;
-      }
-      else
-      {
-        if (_image.sprite != _vertical)
-          _image.sprite = _vertical;
-      }
-    }
+    // private void Update()
+    // {
+    //   if (_progress == 1)
+    //     return;
+    //
+    //   float aspectRatio = (float)Screen.width / Screen.height;
+    //
+    //   if (aspectRatio > 1.0f)
+    //   {
+    //     if (_image.sprite != _horizontal)
+    //       _image.sprite = _horizontal;
+    //   }
+    //   else
+    //   {
+    //     if (_image.sprite != _vertical)
+    //       _image.sprite = _vertical;
+    //   }
+    // }
 
     private void OnProgressChanged(float progress)
     {
       ReportProgress(progress);
-      _progress = progress;
+      // _progress = progress;
     }
 
     private void OnDestroy()

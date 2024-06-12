@@ -1,10 +1,11 @@
-﻿using Infrastructure.Attributes;
+﻿using Gameplay.UI.Level;
+using Infrastructure.Attributes;
 using Infrastructure.GameManagment;
 using Infrastructure.Locator;
 using Infrastructure.UI;
 using UnityEngine;
 
-namespace Gameplay.UI.Level
+namespace Gameplay.LevelSystem.Installer
 {
   public class LevelInstaller : GameInstaller
   {

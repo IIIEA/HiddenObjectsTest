@@ -16,7 +16,7 @@ namespace Infrastructure.ApplicationLoader.LoadingTasks
 
     private const string DOWNLOAD_URL = "https://raw.githubusercontent.com/IIIEA/HiddenObjectsTest/main/LevelsData.json";
     
-    public float Weight => 1f;
+    public float Weight => 0.25f;
 
     [Inject]
     private void Construct(GameDataManager gameDataManager, AssetLoader assetLoader)
@@ -32,7 +32,13 @@ namespace Infrastructure.ApplicationLoader.LoadingTasks
       GameData gameData = JsonUtility.FromJson<GameData>(jsonText);
       _gameDataManager.SetData(gameData);
 
-      // LoadingScreen.ReportProgress(Weight);
+      LoadingScreen.ReportProgress(Weight);
+      if (jsonText == string.Empty)
+      {
+        callback.Invoke(LoadingResult.Fail("Data not loaded"));
+        return;
+      }
+      
       callback.Invoke(LoadingResult.Success());
     }
   }

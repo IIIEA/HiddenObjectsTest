@@ -1,4 +1,5 @@
 ﻿using System;
+using Gameplay.LevelSystem;
 using Infrastructure.SaveLoadSystem;
 
 namespace Gameplay.UI
@@ -18,7 +19,7 @@ namespace Gameplay.UI
       _levelLoader = levelLoader;
 
       _view.AddButtonListener(OnViewClick);
-      _levelData.OnDataUpdated += ShowLoaded;
+      _levelData.OnImageUpdated += ShowLoaded;
       _levelData.OnProgressChanged += OnProgressChanged;
       UpdateInfo();
     }
@@ -65,7 +66,7 @@ namespace Gameplay.UI
     {
       _view.RemoveButtonListener(OnViewClick);
       _view = null;
-      _levelData.OnDataUpdated -= ShowLoaded;
+      _levelData.OnImageUpdated -= ShowLoaded;
       _levelData.OnProgressChanged -= OnProgressChanged;
     }
   }

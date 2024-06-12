@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Infrastructure.Attributes;
+﻿using Infrastructure.Attributes;
 using Infrastructure.GameManagment;
 using Infrastructure.Locator;
 using WebRequestSystem;
@@ -16,9 +15,4 @@ public class GameDataInstaller : GameInstaller
     {
       _gameDataManager.Construct(_assetLoader);
     }
-}
-
-public interface ILevelsProvider
-{
-  IEnumerable<LevelData> ProvideLevels();
 }

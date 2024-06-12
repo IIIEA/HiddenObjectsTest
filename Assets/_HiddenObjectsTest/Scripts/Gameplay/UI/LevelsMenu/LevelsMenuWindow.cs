@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Gameplay.LevelSystem;
 using Infrastructure;
 using Infrastructure.Attributes;
 using Infrastructure.GameManagment;
@@ -35,6 +36,7 @@ namespace Gameplay.UI
       foreach (var levelData in _levelsProvider.ProvideLevels())
       {
         var view = _levelsViewPool.GetInstance();
+        view.transform.SetAsLastSibling();
         var slotLevelPresenter = new LevelSlotPresenter(view, levelData, _levelLoader);
         
         _viewPresenters.Add(view, slotLevelPresenter);

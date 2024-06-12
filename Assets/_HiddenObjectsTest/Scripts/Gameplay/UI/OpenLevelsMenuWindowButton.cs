@@ -3,7 +3,7 @@ using Infrastructure.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Gameplay.UI.Level
+namespace Gameplay.UI
 {
   public class OpenLevelsMenuWindowButton : MonoBehaviour
   {

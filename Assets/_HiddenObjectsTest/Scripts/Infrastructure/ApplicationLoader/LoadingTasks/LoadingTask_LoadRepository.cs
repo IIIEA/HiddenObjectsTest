@@ -3,7 +3,6 @@ using Cysharp.Threading.Tasks;
 using Infrastructure.Attributes;
 using Infrastructure.GameManagment;
 using Infrastructure.SaveLoadSystem;
-using UnityEngine;
 
 namespace Infrastructure.ApplicationLoader.LoadingTasks
 {
@@ -12,7 +11,7 @@ namespace Infrastructure.ApplicationLoader.LoadingTasks
     private SaveLoadManager _saveLoadManager;
     private GameManager _gameManager;
     
-    public float Weight { get; private set; } = 0.7f;
+    public float Weight { get; private set; } = 0.75f;
     
     [Inject]
     private void Construct(SaveLoadManager saveLoadManager, GameManager gameManager)
@@ -23,7 +22,7 @@ namespace Infrastructure.ApplicationLoader.LoadingTasks
 
     public UniTask Do(Action<LoadingResult> callback)
     {
-      // LoadingScreen.ReportProgress(Weight);
+      LoadingScreen.ReportProgress(Weight);
       
       _saveLoadManager.Load();
       _gameManager.StartGame();

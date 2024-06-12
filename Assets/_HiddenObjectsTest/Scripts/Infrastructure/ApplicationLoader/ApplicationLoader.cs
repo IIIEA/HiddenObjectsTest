@@ -29,7 +29,7 @@ namespace Infrastructure.ApplicationLoader
 
     private async void LoadApplication()
     {
-      // LoadingScreen.Show();
+      LoadingScreen.Show();
       CreateTasks(_pipeline.GetTaskList());
 
       foreach (ILoadingTask task in _loadingTasks)
@@ -46,7 +46,7 @@ namespace Infrastructure.ApplicationLoader
         }
       }
 
-      // LoadingScreen.Hide();
+      LoadingScreen.Hide();
       OnLoadingCompleted?.Invoke();
     }
 
