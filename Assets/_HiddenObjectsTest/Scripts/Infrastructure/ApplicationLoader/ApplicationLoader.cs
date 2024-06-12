@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Infrastructure.GameManagment;
 using Infrastructure.Locator;
 using UnityEngine;
 
 namespace Infrastructure.ApplicationLoader
 {
-  public sealed class ApplicationLoader : MonoBehaviour
+  public sealed class ApplicationLoader : MonoBehaviour, IDisposable
   {
     [SerializeField] private bool _isLoadOnStart;
     [SerializeField] private ServiceLocator _serviceLocator;
     [SerializeField] private LoadingPipeline _pipeline;
 
+    private CancellationTokenSource _cancellationToken = new ();
     private List<ILoadingTask> _loadingTasks = new();
 
     public Action<float> OnProgressChanged;
-    public event Action OnLoadingCompleted;
-    public event Action<string> OnLoadingFailed;
 
     private void Start()
     {
@@ -37,7 +38,10 @@ namespace Infrastructure.ApplicationLoader
         var tcs = new TaskCompletionSource<LoadingResult>();
         task.Do(result => tcs.TrySetResult(result));
 
-        LoadingResult result = await tcs.Task;
+        var uniTask = tcs.Task;
+        uniTask.AddTo(_cancellationToken.Token);
+        
+        LoadingResult result = await uniTask;
 
         if (!result.IsSuccess)
         {
@@ -47,7 +51,6 @@ namespace Infrastructure.ApplicationLoader
       }
 
       LoadingScreen.Hide();
-      OnLoadingCompleted?.Invoke();
     }
 
     private void CreateTasks(Type[] tasks)
@@ -59,6 +62,11 @@ namespace Infrastructure.ApplicationLoader
         DependencyInjector.Inject(instance, _serviceLocator);
         _loadingTasks.Add(task);
       }
+    }
+
+    public void Dispose()
+    {
+      _cancellationToken?.Dispose();
     }
   }
 }
